@@ -65,6 +65,15 @@ export default function ContactSection() {
   })
   const [submitted, setSubmitted] = useState(false)
 
+  // Pre-fill experience from query param (e.g. coming from a detail page)
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const exp = params.get('experience')
+    if (exp && experiences.includes(exp)) {
+      setForm((prev) => ({ ...prev, experience: exp }))
+    }
+  }, [])
+
   // Reset form when user navigates away and comes back to this section
   const wasHidden = useRef(false)
   useEffect(() => {

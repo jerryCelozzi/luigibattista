@@ -32,9 +32,24 @@
 - Aggiunto `.gitignore` con `.next/`, `node_modules/`, `out/`
 - Aggiunto `vercel.json` con `"framework": "nextjs"` per forzare il rilevamento corretto
 
-### [x] Step 4 — Bug fix form prenotazioni
+### [x] Step 4 — Bug fix form prenotazioni + UX miglioramenti
 - Aggiunto pulsante "← Nuova Richiesta" nel messaggio di successo (per chi rimane nella sezione)
 - Aggiunto `IntersectionObserver` in `ContactSection.tsx`: se l'utente scrolla via e torna alla sezione tramite "Prenota Ora", il form si resetta automaticamente a pulito
+- Form di prenotazione inline nel booking box della pagina dettaglio: click su "Prenota" espande il form direttamente nella pagina (senza saltare alla home), con esperienza pre-compilata e read-only, stato success con "Nuova Richiesta"
+
+---
+
+### [x] Step 5 — Pagine dettaglio escursioni
+- Creato `lib/activities.ts` con dati completi delle 4 attività (itinerario, incluso/non incluso, gradienti, slug)
+- Creata route dinamica `app/escursioni/[slug]/page.tsx` con `generateStaticParams` e `generateMetadata`
+- Creato `components/ActivityDetail.tsx` con:
+  - Hero fullscreen con effetto parallasse (Framer Motion `useScroll` + `useTransform`)
+  - Quick stats bar (durata, difficoltà, gruppo, prezzo)
+  - Timeline itinerario con animazioni scroll-triggered
+  - Box incluso / non incluso
+  - Booking box sticky con CTA
+- `ActivitiesSection.tsx`: card ora sono link cliccabili verso `/escursioni/[slug]`
+- `Navbar` spostato in `app/layout.tsx` per renderla disponibile su tutte le pagine
 
 ---
 
