@@ -48,7 +48,7 @@ export default function ActivityDetail({ activity }: { activity: Activity }) {
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.3, duration: 0.6 }}
-          className="absolute top-24 left-6 z-20"
+          className="fixed top-24 left-6 z-40"
         >
           <Link
             href="/#esperienze"
