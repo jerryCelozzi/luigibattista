@@ -30,6 +30,11 @@
 ### [x] Step 3 — Fix deploy Vercel
 - Rimosso `output: 'export'` da `next.config.js` (Vercel gestisce Next.js nativamente)
 - Aggiunto `.gitignore` con `.next/`, `node_modules/`, `out/`
+- Aggiunto `vercel.json` con `"framework": "nextjs"` per forzare il rilevamento corretto
+
+### [x] Step 4 — Bug fix form prenotazioni
+- Aggiunto pulsante "← Nuova Richiesta" nel messaggio di successo (per chi rimane nella sezione)
+- Aggiunto `IntersectionObserver` in `ContactSection.tsx`: se l'utente scrolla via e torna alla sezione tramite "Prenota Ora", il form si resetta automaticamente a pulito
 
 ---
 

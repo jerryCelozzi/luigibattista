@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { motion, useInView } from 'framer-motion'
 
 const experiences = [
@@ -65,6 +65,27 @@ export default function ContactSection() {
   })
   const [submitted, setSubmitted] = useState(false)
 
+  // Reset form when user navigates away and comes back to this section
+  const wasHidden = useRef(false)
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) {
+          wasHidden.current = true
+        } else if (wasHidden.current) {
+          wasHidden.current = false
+          setSubmitted(false)
+          setForm({ name: '', email: '', guests: '2', experience: '', date: '', message: '' })
+        }
+      },
+      { threshold: 0.15 }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
   const set = (field: keyof FormState) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
     setForm((prev) => ({ ...prev, [field]: e.target.value }))
 
@@ -128,9 +149,18 @@ export default function ContactSection() {
               >
                 <div className="text-6xl mb-4">🎉</div>
                 <h3 className="font-display text-2xl font-bold text-white mb-3">Richiesta Inviata!</h3>
-                <p className="text-white/55 text-sm max-w-xs mx-auto">
+                <p className="text-white/55 text-sm max-w-xs mx-auto mb-8">
                   Grazie per il tuo interesse! Ti contatteremo entro 24 ore con la tua offerta personalizzata.
                 </p>
+                <button
+                  onClick={() => {
+                    setSubmitted(false)
+                    setForm({ name: '', email: '', guests: '2', experience: '', date: '', message: '' })
+                  }}
+                  className="px-6 py-3 rounded-xl glass border border-white/20 text-white text-sm font-medium hover:border-teal-500/50 hover:bg-white/10 transition-all duration-300"
+                >
+                  ← Nuova Richiesta
+                </button>
               </motion.div>
             ) : (
               <form onSubmit={(e) => { e.preventDefault(); setSubmitted(true) }} className="space-y-5">
