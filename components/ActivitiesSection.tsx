@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef } from 'react'
+import { useRef, useEffect } from 'react'
 import Link from 'next/link'
 import { motion, useInView } from 'framer-motion'
 import { activities } from '@/lib/activities'
@@ -65,6 +65,13 @@ function ActivityCard({ act, index }: { act: Activity; index: number }) {
 export default function ActivitiesSection() {
   const titleRef = useRef<HTMLDivElement>(null)
   const titleInView = useInView(titleRef, { once: true })
+
+  useEffect(() => {
+    if (window.location.hash === '#esperienze') {
+      const t = setTimeout(() => history.replaceState(null, '', '/'), 800)
+      return () => clearTimeout(t)
+    }
+  }, [])
 
   return (
     <section id="esperienze" className="py-28 relative bg-gradient-to-b from-[#0f2535] to-[#0a0f1e]">
